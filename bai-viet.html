@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Bài viết – Hoàng Trang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=7">
+</head>
+<body data-page="news">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <nav class="crumbs" aria-label="Vị trí"><ol id="crumbs"><li><a href="index.html">Trang chủ</a></li><li><a href="tin-tuc.html">Tin tức</a></li></ol></nav>
+
+    <div class="article-layout">
+      <article class="article" id="article">
+        <p class="muted">Đang tải bài viết…</p>
+      </article>
+
+      <aside class="article-side" aria-label="Bài viết khác">
+        <div class="side-box">
+          <h2>Bài viết mới</h2>
+          <ul class="side-posts" id="side-posts"></ul>
+        </div>
+        <div class="side-box side-box--cta">
+          <h2>Cần tư vấn, báo giá?</h2>
+          <p>Gọi Hotline hoặc gửi mã hàng qua Zalo để nhận báo giá.</p>
+          <a class="btn btn--accent btn--block" href="tel:0975629596">Gọi 0975.629.596</a>
+          <a class="btn btn--zalo btn--block" href="https://zalo.me/0909428442" target="_blank" rel="noopener">Chat Zalo</a>
+        </div>
+      </aside>
+    </div>
+
+    <section class="section" aria-labelledby="more-title">
+      <div class="section-head"><h2 id="more-title">Bài viết liên quan</h2><a href="tin-tuc.html">Xem tất cả →</a></div>
+      <div class="grid grid--3 posts" id="more-posts"></div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js?v=7"></script>
+  <script src="assets/js/main.js?v=7"></script>
+  <script>
+    (function () {
+      const H = window.HTAT, $ = H.$;
+      H.loadPosts().then((list) => {
+        const p = list.find((x) => x.id === Number(H.params.get('id'))) || list[0];
+        document.title = p.title + ' – Hoàng Trang';
+        $('#crumbs').insertAdjacentHTML('beforeend', '<li>' + H.esc(p.title) + '</li>');
+        $('#article').innerHTML =
+          '<header class="article__head"><h1>' + H.esc(p.title) + '</h1>' +
+          '<p class="article__meta">' + H.icon('clock') + '<time datetime="' + p.date + '">' + H.fmtDate(p.date) + '</time> · ' + p.minutes + ' phút đọc</p></header>' +
+          '<div class="prose article__body">' + p.html + '</div>' +
+          '<div class="article__foot"><a class="btn btn--outline" href="tin-tuc.html">← Tất cả bài viết</a></div>';
+        H.$$('#article .article__body a[href^="https://htat.vn/"]').forEach((a) => { a.target = '_blank'; a.rel = 'noopener'; });
+        const others = list.filter((x) => x.id !== p.id);
+        $('#side-posts').innerHTML = others.slice(0, 5).map((x) => '<li><a href="' + H.postUrl(x) + '">' + H.img(x.img, '') +
+          '<span><b>' + H.esc(x.title) + '</b><time>' + H.fmtDate(x.date) + '</time></span></a></li>').join('');
+        $('#more-posts').innerHTML = others.slice(0, 3).map(H.postCardHTML).join('');
+      }).catch(() => { $('#article').innerHTML = '<p class="muted">Không tải được bài viết. Hãy mở qua máy chủ local (xem README).</p>'; });
+    })();
+  </script>
+</body>
+</html>

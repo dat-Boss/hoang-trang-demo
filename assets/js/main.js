@@ -145,6 +145,17 @@
       '<span class="lbl-long">Thêm vào giỏ báo giá</span><span class="lbl-short">Thêm vào giỏ</span></button>' +
       '</div></article>';
   }
+  /* ---------- Thẻ bài viết ---------- */
+  const postUrl = (p) => 'bai-viet.html?id=' + p.id;
+  const fmtDate = (d) => { const x = d.split('-'); return x[2] + '/' + x[1] + '/' + x[0]; };
+  function postCardHTML(p) {
+    return '<article class="post"><a class="post__img" href="' + postUrl(p) + '" tabindex="-1" aria-hidden="true">' + img(p.img, '') + '</a>' +
+      '<div class="post__body"><time datetime="' + p.date + '">' + fmtDate(p.date) + (p.minutes ? ' · ' + p.minutes + ' phút đọc' : '') + '</time>' +
+      '<h3><a href="' + postUrl(p) + '">' + esc(p.title) + '</a></h3><p>' + esc(p.excerpt) + '</p></div></article>';
+  }
+  let postsPromise;
+  const loadPosts = () => (postsPromise = postsPromise || fetch('assets/data/tin-tuc.json?v=1').then((r) => r.json()));
+
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-add]');
     if (!b) return;
@@ -173,8 +184,8 @@
     const nav = [
       ['index.html', 'Trang chủ', 'home'],
       ['danh-muc.html', 'Sản phẩm', 'products'],
-      [SITE.old + '/gioi-thieu/', 'Giới thiệu', 'about'],
-      [SITE.old + '/tin-tuc/', 'Tin tức', 'news'],
+      ['gioi-thieu.html', 'Giới thiệu', 'about'],
+      ['tin-tuc.html', 'Tin tức', 'news'],
       ['lien-he.html', 'Liên hệ', 'contact'],
     ];
     const logo = '<a class="logo" href="index.html" aria-label="Trang chủ Hoàng Trang"><img src="' + SITE.logo + '" alt="Logo Hoàng Trang" width="56" height="56">' +
@@ -213,7 +224,7 @@
 
   function footerHTML() {
     const policies = [
-      ['Giới thiệu', '/gioi-thieu/'], ['Quy định chung', '/quy-dinh-chung/'], ['Chính sách bảo mật', '/chinh-sach-bao-mat/'],
+      ['Giới thiệu', 'gioi-thieu.html'], ['Tin tức', 'tin-tuc.html'], ['Quy định chung', '/quy-dinh-chung/'], ['Chính sách bảo mật', '/chinh-sach-bao-mat/'],
       ['Chính sách bảo hành', '/chinh-sach-bao-hanh/'], ['Chính sách đổi trả hàng', '/refund_returns/'],
     ];
     const prod = groupItems.filter((g) => ['ats', 'acb', 'mccb', 'contactor', 'bien-tan', 'dong-ho', 'lam-mat'].includes(g.key));
@@ -223,7 +234,7 @@
       '<p>Email: <a href="mailto:' + SITE.email + '">' + SITE.email + '</a></p><p>Zalo: <a href="' + SITE.zaloUrl + '">' + SITE.zalo + '</a></p>' +
       '<p>Thời gian: ' + SITE.hours + '</p></div>' +
       '<details><summary><h4>Sản phẩm</h4></summary><ul>' + prod.map((g) => '<li><a href="' + groupUrl(g.key) + '">' + esc(g.name) + '</a></li>').join('') + '</ul></details>' +
-      '<details><summary><h4>Chính sách</h4></summary><ul>' + policies.map((p) => '<li><a href="' + SITE.old + p[1] + '">' + p[0] + '</a></li>').join('') + '</ul></details>' +
+      '<details><summary><h4>Thông tin &amp; chính sách</h4></summary><ul>' + policies.map((p) => '<li><a href="' + (p[1].startsWith('/') ? SITE.old + p[1] : p[1]) + '">' + p[0] + '</a></li>').join('') + '</ul></details>' +
       '<div><h4>Đăng ký nhận tư vấn miễn phí</h4><form class="footer__sub" data-proto-form="Đăng ký nhận tư vấn">' +
       '<label class="sr-only" for="sub-email">Email</label><input id="sub-email" type="email" required placeholder="Địa chỉ email">' +
       '<button class="btn btn--accent" type="submit">Gửi</button></form></div>' +
@@ -297,8 +308,9 @@
     if (f) f.outerHTML = footerHTML();
     bindHeader();
     updateCartBadges();
+    $$('[data-icon]').forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
   }
   init();
 
-  window.HTAT = { D, SITE, icon, esc, norm, params, store, byId, groupItems, groupByKey, inGroup, matchBrand, brandCount, brandsShown, productUrl, groupUrl, brandUrl, search, cart, toast, img, thumb, cardHTML, updateCartBadges, $, $$ };
+  window.HTAT = { D, SITE, icon, esc, norm, params, store, byId, groupItems, groupByKey, inGroup, matchBrand, brandCount, brandsShown, productUrl, groupUrl, brandUrl, search, cart, toast, img, thumb, cardHTML, postCardHTML, postUrl, fmtDate, loadPosts, updateCartBadges, $, $$ };
 })();

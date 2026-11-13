@@ -59,13 +59,9 @@
   $('#cta-btns').innerHTML = '<a class="btn btn--accent" href="' + SITE.tel + '">' + icon('phone') + 'Gọi ' + SITE.hotline + '</a>' +
     '<a class="btn btn--ghost-white" href="' + SITE.zaloUrl + '" target="_blank" rel="noopener">' + icon('chat') + 'Zalo ' + SITE.zalo + '</a>';
 
-  // Tin tức (3 bài mới nhất trên web cũ)
-  $('#posts').innerHTML = D.posts.map((p) => {
-    const d = p.date.split('-');
-    return '<article class="post"><a class="post__img" href="' + esc(p.url) + '">' + (p.img ? img(p.img, '') : '<div class="img-ph">Ảnh đang cập nhật</div>') + '</a>' +
-      '<div class="post__body"><time datetime="' + p.date + '">' + d[2] + '/' + d[1] + '/' + d[0] + '</time>' +
-      '<h3><a href="' + esc(p.url) + '">' + esc(p.title) + '</a></h3><p>' + esc(p.excerpt) + '</p></div></article>';
-  }).join('');
+  // Tin tức (3 bài mới nhất, mở trong trang Chi tiết bài viết)
+  H.loadPosts().then((list) => { $('#posts').innerHTML = list.slice(0, 3).map(H.postCardHTML).join(''); })
+    .catch(() => { $('#posts').innerHTML = '<p class="muted">Không tải được tin tức.</p>'; });
 
   // Khách hàng nói gì (giữ nguyên nội dung web cũ)
   const quotes = [

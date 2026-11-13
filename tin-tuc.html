@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Tin tức kỹ thuật – Hoàng Trang</title>
+  <meta name="description" content="Bài viết kỹ thuật về ATS, MCB, MCCB, biến tần, SSR, đồng hồ đo điện… từ Hoàng Trang.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=7">
+</head>
+<body data-page="news">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <nav class="crumbs" aria-label="Vị trí"><ol><li><a href="index.html">Trang chủ</a></li><li>Tin tức</li></ol></nav>
+    <header class="cat-head">
+      <h1>Tin tức kỹ thuật</h1>
+      <p class="desc-short" id="news-count">Kiến thức về thiết bị điện, tự động hoá và năng lượng.</p>
+    </header>
+    <div id="news-featured"></div>
+    <div class="grid grid--3 posts" id="news-grid"></div>
+    <div style="height:var(--section)"></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js?v=7"></script>
+  <script src="assets/js/main.js?v=7"></script>
+  <script>
+    (function () {
+      const H = window.HTAT;
+      H.loadPosts().then((list) => {
+        H.$('#news-count').textContent = list.length + ' bài viết về thiết bị điện, tự động hoá và năng lượng.';
+        const f = list[0];
+        H.$('#news-featured').innerHTML = '<article class="post post--featured"><a class="post__img" href="' + H.postUrl(f) + '" tabindex="-1" aria-hidden="true">' + H.img(f.img, '') + '</a>' +
+          '<div class="post__body"><span class="badge-new">Mới nhất</span><time datetime="' + f.date + '">' + H.fmtDate(f.date) + ' · ' + f.minutes + ' phút đọc</time>' +
+          '<h2><a href="' + H.postUrl(f) + '">' + H.esc(f.title) + '</a></h2><p>' + H.esc(f.excerpt) + '</p>' +
+          '<a class="btn btn--outline" href="' + H.postUrl(f) + '">Đọc bài viết →</a></div></article>';
+        H.$('#news-grid').innerHTML = list.slice(1).map(H.postCardHTML).join('');
+      }).catch(() => { H.$('#news-grid').innerHTML = '<p class="muted">Không tải được tin tức. Hãy mở qua máy chủ local (xem README).</p>'; });
+    })();
+  </script>
+</body>
+</html>
