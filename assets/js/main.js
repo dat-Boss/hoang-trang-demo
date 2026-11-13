@@ -153,6 +153,44 @@
       '<div class="post__body"><time datetime="' + p.date + '">' + fmtDate(p.date) + (p.minutes ? ' · ' + p.minutes + ' phút đọc' : '') + '</time>' +
       '<h3><a href="' + postUrl(p) + '">' + esc(p.title) + '</a></h3><p>' + esc(p.excerpt) + '</p></div></article>';
   }
+  /* ---------- Đổi link web cũ (htat.vn) trong mô tả / bài viết sang trang mới ----------
+     - trang sản phẩm, bài viết, danh mục, trang chủ, liên hệ… -> trang tương ứng trên web mới
+     - link tới file ảnh (wp-content), trang quản trị (wp-admin) và link không khớp -> bỏ link, giữ chữ/ảnh */
+  const OLD_PAGES = { 'tin-tuc': 'tin-tuc.html', 'gioi-thieu': 'gioi-thieu.html', 'lien-he': 'lien-he.html', 'gio-hang': 'gio-hang.html', 'san-pham': 'danh-muc.html', 'cua-hang': 'danh-muc.html' };
+  const OLD_GROUPS = { ats: 'ats', acb: 'acb', mcb: 'mcb', mccb: 'mccb', contactor: 'contactor', mc: 'contactor', inverter: 'bien-tan', 'relay-abb': 'relay', 'solid-state-relay': 'ssr', 'nang-luong-mat-troi': 'nlmt', 'fan-blower': 'lam-mat', thermostat: 'nhiet-do' };
+  const OLD_BRANDS = { osemco: 'Osemco', hyundai: 'Hyundai', daco: 'Daco', 'primus-thuong-hieu': 'Primus', primus: 'Primus', growatt: 'Growatt', ge: 'GE' };
+  const bySlug = new Map(D.products.map((p) => [p.slug, p]));
+  function localUrl(href) {
+    if (!/^(https?:)?\/\//i.test(href || '')) return undefined;          // #neo, mailto:, tel:, link nội bộ: giữ nguyên
+    let u; try { u = new URL(href, 'https://htat.vn/'); } catch (e) { return null; }
+    if (!/(^|\.)htat\.vn$/i.test(u.hostname)) return undefined;          // không phải web cũ: giữ nguyên
+    const p = u.pathname.split('/').filter(Boolean).map((s) => { try { return decodeURIComponent(s).toLowerCase(); } catch (e) { return s.toLowerCase(); } });
+    if (!p.length) return 'index.html';
+    if (OLD_PAGES[p[0]]) return OLD_PAGES[p[0]];
+    if (p[0] === 'danh-muc') {
+      if (p[1] === 'thuong-hieu' && OLD_BRANDS[p[2]] && p.length === 3) return brandUrl(OLD_BRANDS[p[2]]);
+      const g = [...p].reverse().find((s) => OLD_GROUPS[s]);
+      if (g) return groupUrl(OLD_GROUPS[g]);
+      if (p[1] === 'thuong-hieu' && OLD_BRANDS[p[2]]) return brandUrl(OLD_BRANDS[p[2]]);
+      return 'danh-muc.html';
+    }
+    if (p.length === 1) {
+      const prod = bySlug.get(p[0]);
+      if (prod) return productUrl(prod);
+      const post = (window.HTAT_POSTS || []).find((x) => x.slug === p[0]);
+      if (post) return 'bai-viet.html?id=' + post.id;
+    }
+    return null;                                                           // wp-content, wp-admin, không khớp
+  }
+  function localizeLinks(root) {
+    $$('a[href]', root).forEach((a) => {
+      const t = localUrl(a.getAttribute('href'));
+      if (t === undefined) return;
+      if (t) { a.setAttribute('href', t); a.removeAttribute('target'); return; }
+      a.replaceWith(...a.childNodes);                                      // bỏ link, giữ nội dung
+    });
+  }
+
   // Bài viết nạp sẵn qua assets/js/tin-tuc.js (chạy được cả khi mở file trực tiếp)
   const loadPosts = () => (Array.isArray(window.HTAT_POSTS) && window.HTAT_POSTS.length
     ? Promise.resolve(window.HTAT_POSTS)
@@ -202,7 +240,7 @@
       '<span>' + icon('phone') + 'Hotline <a href="' + SITE.tel + '"><b>' + SITE.hotline + '</b></a></span>' +
       '<span>' + icon('chat') + 'Zalo <a href="' + SITE.zaloUrl + '" target="_blank" rel="noopener"><b>' + SITE.zalo + '</b></a></span>' +
       '<span>' + icon('clock') + SITE.hours + '</span></div>' +
-      '<a href="' + SITE.old + '/tai-khoan/">Tài khoản</a></div></div>' +
+      '<span>' + icon('mail') + '<a href="mailto:' + SITE.email + '">' + SITE.email + '</a></span></div></div>' +
       '<header class="header"><div class="container header__main">' + logo + searchBox('q-desk') +
       '<div class="header__actions"><a class="cart-link" href="gio-hang.html">' + icon('cart') + '<span class="badge-count" data-n="0">0</span>Giỏ báo giá</a>' +
       '<a class="btn btn--accent" href="gio-hang.html">Yêu cầu báo giá</a></div></div></header>' +
@@ -226,9 +264,9 @@
 
   function footerHTML() {
     const policies = [
-      ['Giới thiệu', 'gioi-thieu.html'], ['Tin tức', 'tin-tuc.html'], ['Quy định chung', '/quy-dinh-chung/'], ['Chính sách bảo mật', '/chinh-sach-bao-mat/'],
-      // Đã bỏ "Chính sách bảo hành" và "Chính sách đổi trả" (trang trên web cũ là nội dung của công ty khác / trang mẫu)
-      // — chờ anh gửi nội dung thật (duyệt 13/11/2026).
+      ['Giới thiệu', 'gioi-thieu.html'], ['Tin tức', 'tin-tuc.html'], ['Liên hệ', 'lien-he.html'], ['Giỏ báo giá', 'gio-hang.html'],
+      // Không còn link nào sang web cũ (anh duyệt 13/11/2026). Các trang chính sách
+      // (bảo hành, đổi trả, quy định chung, bảo mật) sẽ thêm khi có nội dung thật.
     ];
     const prod = groupItems.filter((g) => ['ats', 'acb', 'mccb', 'contactor', 'bien-tan', 'dong-ho', 'lam-mat'].includes(g.key));
     return '<footer class="footer"><div class="container"><div class="footer__grid">' +
@@ -237,7 +275,7 @@
       '<p>Email: <a href="mailto:' + SITE.email + '">' + SITE.email + '</a></p><p>Zalo: <a href="' + SITE.zaloUrl + '">' + SITE.zalo + '</a></p>' +
       '<p>Thời gian: ' + SITE.hours + '</p></div>' +
       '<details><summary><h4>Sản phẩm</h4></summary><ul>' + prod.map((g) => '<li><a href="' + groupUrl(g.key) + '">' + esc(g.name) + '</a></li>').join('') + '</ul></details>' +
-      '<details><summary><h4>Thông tin &amp; chính sách</h4></summary><ul>' + policies.map((p) => '<li><a href="' + (p[1].startsWith('/') ? SITE.old + p[1] : p[1]) + '">' + p[0] + '</a></li>').join('') + '</ul></details>' +
+      '<details><summary><h4>Thông tin</h4></summary><ul>' + policies.map((p) => '<li><a href="' + p[1] + '">' + p[0] + '</a></li>').join('') + '</ul></details>' +
       '<div><h4>Đăng ký nhận tư vấn miễn phí</h4><form class="footer__sub" data-proto-form="Đăng ký nhận tư vấn">' +
       '<label class="sr-only" for="sub-email">Email</label><input id="sub-email" type="email" required placeholder="Địa chỉ email">' +
       '<button class="btn btn--accent" type="submit">Gửi</button></form></div>' +
@@ -315,5 +353,5 @@
   }
   init();
 
-  window.HTAT = { D, SITE, icon, esc, norm, params, store, byId, groupItems, groupByKey, inGroup, matchBrand, brandCount, brandsShown, productUrl, groupUrl, brandUrl, search, cart, toast, img, thumb, cardHTML, postCardHTML, postUrl, fmtDate, loadPosts, updateCartBadges, $, $$ };
+  window.HTAT = { D, SITE, icon, esc, norm, params, store, byId, groupItems, groupByKey, inGroup, matchBrand, brandCount, brandsShown, productUrl, groupUrl, brandUrl, search, cart, toast, img, thumb, cardHTML, postCardHTML, postUrl, fmtDate, loadPosts, localizeLinks, updateCartBadges, $, $$ };
 })();

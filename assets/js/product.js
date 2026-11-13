@@ -87,14 +87,15 @@
   }
 
   // Mô tả: tải riêng để trang nhẹ
-  fetch('assets/data/mo-ta.json').then((r) => r.json()).then((all) => {
+  fetch('assets/data/mo-ta.json?v=9').then((r) => r.json()).then((all) => {
     const d = all[String(p.id)] || { html: '', tables: [] };
     $('#desc').innerHTML = d.html || '<p class="muted">Mô tả đang được cập nhật.</p>';
-    $$('#desc a[href^="https://htat.vn/"]').forEach((a) => { a.target = '_blank'; a.rel = 'noopener'; });
+    H.localizeLinks($('#desc'));
     let specHTML = '';
     if (specRows.length) specHTML += '<table class="spec-table">' + specRows.map((r) => '<tr><th scope="row">' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>').join('') + '</table>';
     if (d.tables.length) specHTML += '<div class="prose" style="margin-top:16px">' + d.tables.join('') + '</div>';
     $('#specs').innerHTML = specHTML;
+    H.localizeLinks($('#specs'));
     addTabs(d.tables.length > 0);
     requestAnimationFrame(() => { if ($('#desc').scrollHeight <= 700) { $('#desc').classList.remove('collapsed'); $('#desc-more').hidden = true; } });
   }).catch(() => {

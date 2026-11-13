@@ -702,3 +702,5 @@ a.info-card:hover { border-color: var(--brand-700); background: var(--brand-50);
   .article-side { position: static; }
 }
 @media (max-width: 767px) { .article__head h1 { font-size: 24px; } .article__body { font-size: 16px; } }
+
+.brochure { margin: 0; }
