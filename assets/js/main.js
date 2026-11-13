@@ -153,8 +153,10 @@
       '<div class="post__body"><time datetime="' + p.date + '">' + fmtDate(p.date) + (p.minutes ? ' · ' + p.minutes + ' phút đọc' : '') + '</time>' +
       '<h3><a href="' + postUrl(p) + '">' + esc(p.title) + '</a></h3><p>' + esc(p.excerpt) + '</p></div></article>';
   }
-  let postsPromise;
-  const loadPosts = () => (postsPromise = postsPromise || fetch('assets/data/tin-tuc.json?v=1').then((r) => r.json()));
+  // Bài viết nạp sẵn qua assets/js/tin-tuc.js (chạy được cả khi mở file trực tiếp)
+  const loadPosts = () => (Array.isArray(window.HTAT_POSTS) && window.HTAT_POSTS.length
+    ? Promise.resolve(window.HTAT_POSTS)
+    : Promise.reject(new Error('Chưa nạp assets/js/tin-tuc.js')));
 
   document.addEventListener('click', (e) => {
     const b = e.target.closest('[data-add]');
@@ -225,7 +227,8 @@
   function footerHTML() {
     const policies = [
       ['Giới thiệu', 'gioi-thieu.html'], ['Tin tức', 'tin-tuc.html'], ['Quy định chung', '/quy-dinh-chung/'], ['Chính sách bảo mật', '/chinh-sach-bao-mat/'],
-      ['Chính sách bảo hành', '/chinh-sach-bao-hanh/'], ['Chính sách đổi trả hàng', '/refund_returns/'],
+      // Đã bỏ "Chính sách bảo hành" và "Chính sách đổi trả" (trang trên web cũ là nội dung của công ty khác / trang mẫu)
+      // — chờ anh gửi nội dung thật (duyệt 13/11/2026).
     ];
     const prod = groupItems.filter((g) => ['ats', 'acb', 'mccb', 'contactor', 'bien-tan', 'dong-ho', 'lam-mat'].includes(g.key));
     return '<footer class="footer"><div class="container"><div class="footer__grid">' +

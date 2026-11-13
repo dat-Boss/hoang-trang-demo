@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Không tìm thấy trang – Hoàng Trang</title>
+  <style>
+    :root { --brand-900: #131C61; --brand-700: #2B3694; --accent: #C2410C; --text: #1B2033; --muted: #5A6275; --border: #DCE0EA; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; color: var(--text); background: #F5F6FA; line-height: 1.6; }
+    header { background: var(--brand-900); color: #fff; padding: 14px 16px; font-weight: 700; letter-spacing: .03em; }
+    main { max-width: 640px; margin: 0 auto; padding: 48px 16px 64px; text-align: center; }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    p { color: var(--muted); margin: 0 0 24px; }
+    .links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    a.btn { display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 16px; border-radius: 6px; border: 1.5px solid var(--brand-700); color: var(--brand-700); background: #fff; font-weight: 600; text-decoration: none; }
+    a.btn--accent { background: var(--accent); border-color: var(--accent); color: #fff; grid-column: 1 / -1; }
+    #redirect { display: none; }
+    @media (max-width: 480px) { .links { grid-template-columns: 1fr; } }
+  </style>
+  <script>
+    // Chuyển địa chỉ kiểu web cũ (vd. /tin-tuc/, /gioi-thieu/, /lien-he/) sang trang mới tương ứng.
+    (function () {
+      var parts = location.pathname.split('/').filter(Boolean);
+      var root = '/';
+      if (parts[0] === 'hoang-trang-demo') { root = '/hoang-trang-demo/'; parts.shift(); }
+      window.__ROOT = root;
+      var p = parts.map(function (s) { try { return decodeURIComponent(s).toLowerCase(); } catch (e) { return s.toLowerCase(); } });
+      var pages = { 'tin-tuc': 'tin-tuc.html', 'gioi-thieu': 'gioi-thieu.html', 'lien-he': 'lien-he.html', 'gio-hang': 'gio-hang.html',
+        'thanh-toan': 'gio-hang.html', 'san-pham': 'danh-muc.html', 'cua-hang': 'danh-muc.html', 'trang-chu': 'index.html' };
+      var groups = { ats: 'ats', acb: 'acb', mcb: 'mcb', mccb: 'mccb', contactor: 'contactor', mc: 'contactor', inverter: 'bien-tan',
+        'relay-abb': 'relay', 'solid-state-relay': 'ssr', 'nang-luong-mat-troi': 'nlmt', 'fan-blower': 'lam-mat', thermostat: 'nhiet-do' };
+      var brands = { osemco: 'Osemco', hyundai: 'Hyundai', daco: 'Daco', 'primus-thuong-hieu': 'Primus', primus: 'Primus', growatt: 'Growatt', ge: 'GE' };
+      var target = null;
+      if (p.length === 0) target = 'index.html';
+      else if (pages[p[0]]) target = pages[p[0]];
+      else if (p[0].slice(-5) === '.html' && pages[p[0].replace('.html', '')]) target = pages[p[0].replace('.html', '')];
+      else if (p[0] === 'danh-muc') {
+        var last = p[p.length - 1];
+        if (p[1] === 'thuong-hieu' && brands[p[2]]) target = 'danh-muc.html?hang=' + brands[p[2]];
+        else if (groups[last]) target = 'danh-muc.html?nhom=' + groups[last];
+        else if (groups[p[1]]) target = 'danh-muc.html?nhom=' + groups[p[1]];
+        else target = 'danh-muc.html';
+      }
+      if (target) { location.replace(root + target); return; }
+      window.__SLUG = p.length === 1 ? p[0] : null; // có thể là đường dẫn sản phẩm/bài viết cũ
+    })();
+  </script>
+</head>
+<body>
+  <header>HOÀNG TRANG</header>
+  <main>
+    <p id="redirect">Đang chuyển tới trang tương ứng…</p>
+    <h1>Không tìm thấy trang</h1>
+    <p>Địa chỉ này không có trên bản demo. Anh/chị chọn một trang bên dưới, hoặc gọi Hotline <a href="tel:0975629596"><b>0975.629.596</b></a> để được hỗ trợ.</p>
+    <div class="links" id="links"></div>
+  </main>
+  <script>
+    (function () {
+      var r = window.__ROOT || '/';
+      var L = [['index.html', 'Trang chủ'], ['danh-muc.html', 'Sản phẩm'], ['tin-tuc.html', 'Tin tức'], ['gioi-thieu.html', 'Giới thiệu'], ['lien-he.html', 'Liên hệ'], ['gio-hang.html', 'Giỏ báo giá']];
+      document.getElementById('links').innerHTML = '<a class="btn btn--accent" href="' + r + 'lien-he.html">Gửi yêu cầu báo giá</a>' +
+        L.map(function (x) { return '<a class="btn" href="' + r + x[0] + '">' + x[1] + '</a>'; }).join('');
+      // Đường dẫn sản phẩm / bài viết của web cũ (htat.vn/<ten-san-pham>/) → trang mới
+      if (!window.__SLUG) return;
+      var s = document.createElement('script');
+      s.src = r + 'assets/js/data.js';
+      s.onload = function () {
+        var hit = (window.HTAT_DATA.products || []).filter(function (x) { return x.slug === window.__SLUG; })[0];
+        if (hit) { document.getElementById('redirect').style.display = 'block'; location.replace(r + 'san-pham.html?id=' + hit.id); return; }
+        var t = document.createElement('script');
+        t.src = r + 'assets/js/tin-tuc.js';
+        t.onload = function () {
+          var post = (window.HTAT_POSTS || []).filter(function (x) { return x.slug === window.__SLUG; })[0];
+          if (post) location.replace(r + 'bai-viet.html?id=' + post.id);
+        };
+        document.head.appendChild(t);
+      };
+      document.head.appendChild(s);
+    })();
+  </script>
+</body>
+</html>
