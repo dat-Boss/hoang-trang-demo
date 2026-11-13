@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Liên hệ – Hoàng Trang</title>
+  <meta name="description" content="Liên hệ Công ty TNHH Kỹ Thuật Tự Động Hoàng Trang: 308/18 Bình Lợi, Phường 13, Quận Bình Thạnh, TP.HCM. Hotline 0975.629.596.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+</head>
+<body data-page="contact">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <nav class="crumbs" aria-label="Vị trí"><ol><li><a href="index.html">Trang chủ</a></li><li>Liên hệ</li></ol></nav>
+    <header class="cat-head">
+      <h1>Liên hệ</h1>
+      <p class="desc-short">CÔNG TY TNHH KỸ THUẬT TỰ ĐỘNG HOÀNG TRANG</p>
+    </header>
+
+    <div class="contact-layout">
+      <div class="info-cards" id="info-cards"></div>
+
+      <form class="form" id="contact-form" novalidate>
+        <h2>Nói với chúng tôi mong muốn của bạn!</h2>
+        <div class="field">
+          <label for="kh-ten">Họ và tên <span class="req">*</span></label>
+          <input id="kh-ten" name="kh-ten" autocomplete="name" required>
+          <span class="err">Vui lòng nhập họ tên.</span>
+        </div>
+        <div class="field">
+          <label for="kt-sdt">Số điện thoại <span class="req">*</span></label>
+          <input id="kt-sdt" name="kt-sdt" type="tel" autocomplete="tel" inputmode="tel" required pattern="[0-9 .+]{9,15}">
+          <span class="err">Vui lòng nhập số điện thoại hợp lệ.</span>
+        </div>
+        <div class="field">
+          <label for="kh-email">Email</label>
+          <input id="kh-email" name="kh-email" type="email" autocomplete="email">
+          <span class="err">Email chưa đúng định dạng.</span>
+        </div>
+        <div class="field">
+          <label for="kh-ghichu">Nội dung (mã hàng, số lượng, yêu cầu…)</label>
+          <textarea id="kh-ghichu" name="kh-ghichu"></textarea>
+        </div>
+        <button class="btn btn--accent btn--block" type="submit">Gửi yêu cầu</button>
+        <div class="notice" id="form-notice" role="status">Bản mẫu: trên web thật, form này dùng Contact Form 7 hiện có (giữ nguyên các ô và nơi nhận).</div>
+      </form>
+    </div>
+
+    <div class="map">
+      <iframe title="Bản đồ Hoàng Trang" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.674068233317!2d106.7006070739457!3d10.836235658089883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528611c754a99%3A0x975b65a0b00ae72d!2zMzA4LzE4IELDrG5oIEzhu6NpLCBQaMaw4budbmcgMTMsIELDrG5oIFRo4bqhbmgsIFRow6BuaCBwaOG7kSBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1683602688151!5m2!1svi!2s"></iframe>
+    </div>
+    <div style="height:var(--section)"></div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js?v=6"></script>
+  <script src="assets/js/main.js?v=6"></script>
+  <script>
+    (function () {
+      const H = window.HTAT, S = H.SITE, i = H.icon;
+      const cards = [
+        ['pin', 'Địa chỉ', S.address, 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(S.address)],
+        ['phone', 'Hotline', S.hotline, S.tel],
+        ['chat', 'Zalo', S.zalo, S.zaloUrl],
+        ['mail', 'Email', S.email, 'mailto:' + S.email],
+        ['clock', 'Giờ làm việc', S.hours, ''],
+      ];
+      H.$('#info-cards').innerHTML = cards.map((c) => {
+        const inner = '<div class="usp__icon">' + i(c[0]) + '</div><div><small>' + c[1] + '</small><b>' + H.esc(c[2]) + '</b></div>';
+        return c[3] ? '<a class="info-card" href="' + c[3] + '"' + (c[3].startsWith('http') ? ' target="_blank" rel="noopener"' : '') + '>' + inner + '</a>' : '<div class="info-card">' + inner + '</div>';
+      }).join('');
+
+      const form = H.$('#contact-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        let ok = true;
+        form.querySelectorAll('input').forEach((inp) => {
+          const v = inp.checkValidity() && !(inp.required && !inp.value.trim());
+          inp.closest('.field').classList.toggle('invalid', !v);
+          inp.setAttribute('aria-invalid', !v);
+          if (!v && ok) { inp.focus(); ok = false; }
+        });
+        if (ok) { H.$('#form-notice').classList.add('show'); H.toast('Bản mẫu: chưa gửi thật'); }
+      });
+      form.addEventListener('input', (e) => { const f = e.target.closest('.field'); if (f && e.target.checkValidity()) f.classList.remove('invalid'); });
+    })();
+  </script>
+</body>
+</html>

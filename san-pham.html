@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Chi tiết sản phẩm – Hoàng Trang</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+</head>
+<body data-page="products" class="has-pbar">
+  <div id="site-header"></div>
+
+  <main class="container" id="pd-root">
+    <nav class="crumbs" aria-label="Vị trí"><ol id="crumbs"></ol></nav>
+
+    <div class="pd">
+      <div class="gallery">
+        <div class="gallery__main" id="g-main" role="button" tabindex="0" aria-label="Phóng to ảnh"></div>
+        <div class="gallery__thumbs" id="g-thumbs"></div>
+      </div>
+
+      <div>
+        <div class="pd__brand" id="pd-brand"></div>
+        <h1 id="pd-name"></h1>
+        <table class="facts" id="pd-facts"></table>
+        <div class="pd__price">Giá: Liên hệ<small id="pd-price-note"></small></div>
+        <div class="buy">
+          <div class="qty" aria-label="Số lượng">
+            <button type="button" data-step="-1" aria-label="Giảm">−</button>
+            <input id="qty" type="number" min="1" value="1" inputmode="numeric" aria-label="Số lượng">
+            <button type="button" data-step="1" aria-label="Tăng">+</button>
+          </div>
+          <button class="btn btn--accent" type="button" id="btn-add" data-qty-from="#qty">Thêm vào giỏ báo giá</button>
+        </div>
+        <div class="contact-btns" id="contact-btns"></div>
+        <p class="pd__phone" id="pd-phone"></p>
+        <div class="policies" id="policies"></div>
+      </div>
+    </div>
+
+    <div class="ptabs"><div class="tabs" role="tablist" id="ptabs"></div></div>
+    <section class="ppanel" id="mo-ta"><h2>Mô tả</h2><div class="prose collapsed" id="desc"><p class="muted">Đang tải mô tả…</p></div>
+      <button class="btn btn--outline" type="button" id="desc-more" style="margin-top:16px">Xem thêm</button></section>
+    <section class="ppanel" id="thong-so" hidden><h2>Thông số kỹ thuật</h2><div id="specs"></div></section>
+    <section class="ppanel" id="tai-lieu" hidden><h2>Tài liệu tải về</h2><ul class="docs" id="docs"></ul></section>
+
+    <section class="section" aria-labelledby="rel-title">
+      <div class="section-head"><h2 id="rel-title">Sản phẩm liên quan</h2></div>
+      <div class="scroller" id="related"></div>
+    </section>
+  </main>
+
+  <div class="pbar" id="pbar"></div>
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Ảnh phóng to"><button class="icon-btn" type="button" id="lb-close" aria-label="Đóng"></button><img id="lb-img" alt=""></div>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js?v=6"></script>
+  <script src="assets/js/main.js?v=6"></script>
+  <script src="assets/js/product.js?v=6"></script>
+</body>
+</html>

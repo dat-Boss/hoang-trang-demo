@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Sản phẩm – Hoàng Trang</title>
+  <meta name="description" content="Danh mục thiết bị điện và tự động hoá của Hoàng Trang: ATS, ACB, MCCB, contactor, biến tần, đo lường – điều khiển.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+</head>
+<body data-page="products">
+  <div id="site-header"></div>
+
+  <main class="container">
+    <nav class="crumbs" aria-label="Vị trí"><ol id="crumbs"></ol></nav>
+
+    <header class="cat-head">
+      <h1 id="cat-title">Tất cả sản phẩm</h1>
+      <p class="desc-short" id="cat-desc"></p>
+    </header>
+
+    <div class="cat-layout">
+      <div class="sheet-bg" id="sheet-bg"></div>
+      <aside class="filters" id="filters" aria-label="Bộ lọc">
+        <div class="filters__sheet-head"><b>Bộ lọc</b><button class="icon-btn" type="button" id="filters-close" aria-label="Đóng bộ lọc"></button></div>
+        <div class="filters__group"><h3>Danh mục</h3><ul id="f-groups"></ul></div>
+        <div class="filters__group"><h3>Thương hiệu</h3><div id="f-brands"></div></div>
+        <div class="filters__group"><h3>Xuất xứ</h3><div id="f-origins"></div></div>
+        <div class="filters__sheet-foot"><button class="btn btn--primary btn--block" type="button" id="filters-apply">Xem kết quả</button></div>
+      </aside>
+
+      <section aria-label="Danh sách sản phẩm">
+        <div class="toolbar">
+          <span class="small muted" id="result-count"></span>
+          <div class="toolbar__right">
+            <button class="btn btn--outline btn-filter" type="button" id="filters-open" style="min-height:40px"></button>
+            <label class="sr-only" for="sort">Sắp xếp</label>
+            <select class="select" id="sort">
+              <option value="default">Sắp xếp: mặc định</option>
+              <option value="az">Tên A → Z</option>
+              <option value="za">Tên Z → A</option>
+              <option value="code">Theo mã hàng</option>
+            </select>
+            <div class="view-toggle" role="group" aria-label="Kiểu hiển thị">
+              <button type="button" data-view="grid" aria-label="Dạng lưới"></button>
+              <button type="button" data-view="list" aria-label="Dạng danh sách"></button>
+            </div>
+          </div>
+        </div>
+        <div id="results"></div>
+        <nav class="pager" id="pager" aria-label="Phân trang"></nav>
+      </section>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="assets/js/data.js?v=6"></script>
+  <script src="assets/js/main.js?v=6"></script>
+  <script src="assets/js/category.js?v=6"></script>
+</body>
+</html>
