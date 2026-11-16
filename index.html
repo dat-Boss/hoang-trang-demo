@@ -8,118 +8,114 @@
   <meta name="description" content="Công ty TNHH Kỹ Thuật Tự Động Hoàng Trang (HATEC) – đại diện chính thức Hyundai, Osemco, Daco, General Electric, Primus. Thiết bị đóng cắt, chuyển nguồn ATS, biến tần, đo lường – điều khiển.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/style.css?v=12">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=14">
+  <link rel="stylesheet" href="assets/css/giao-dien-2.css?v=16">
 </head>
 <body data-page="home">
   <div id="site-header"></div>
 
   <main>
-    <!-- ① GIỚI THIỆU CÔNG TY (khách vào là thấy công ty trước) -->
-    <section class="hero hero--company">
+    <!-- ① GIỚI THIỆU CÔNG TY -->
+    <section class="hero2">
+      <svg class="hero2__grid" aria-hidden="true" width="100%" height="100%">
+        <defs><pattern id="g" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#fff" stroke-width=".6"/><circle cx="0" cy="0" r="1.6" fill="#fff"/></pattern></defs>
+        <rect width="100%" height="100%" fill="url(#g)"/>
+      </svg>
       <div class="container">
+        <p class="eyebrow">Công ty TNHH Kỹ Thuật Tự Động Hoàng Trang · HATEC</p>
+        <h1>Đại diện chính thức các hãng <b>thiết bị điện &amp; tự động hoá</b></h1>
+        <p class="hero2__lead">Với phương châm “Chất lượng đi đầu”, HATEC cung cấp thiết bị điện, tự động hoá và giải pháp kỹ thuật cho khách hàng từ sản xuất, thương mại đến dịch vụ.</p>
+        <div class="hero2__ctas">
+          <a class="btn btn--accent" href="gioi-thieu.html">Tìm hiểu về công ty</a>
+          <a class="btn btn--pill-white" href="#thiet-bi">Xem sản phẩm</a>
+        </div>
+        <div class="hero2__brands" id="hero-brands" aria-label="Các hãng đại diện chính thức"></div>
+      </div>
+      <div class="stats"><div class="container" id="stats"></div></div>
+    </section>
+
+    <section class="section section--blue-soft anchor" id="ve-chung-toi">
+      <div class="container intro2">
+        <figure class="intro2__media" style="margin:0">
+          <img src="https://htat.vn/wp-content/uploads/2023/05/INTRO-OSEMCO1-768x543.png" alt="Tờ giới thiệu Công ty TNHH Kỹ Thuật Tự Động Hoàng Trang" loading="lazy" width="768" height="543">
+        </figure>
         <div>
-          <p class="eyebrow">Công ty TNHH Kỹ Thuật Tự Động Hoàng Trang · HATEC</p>
-          <h1>Đại diện chính thức các hãng thiết bị điện &amp; tự động hoá</h1>
-          <p>Hyundai, Osemco, Daco (Hàn Quốc), General Electric (Mỹ), Primus (Thái Lan). Với phương châm <b>“Chất lượng đi đầu”</b>,
-            HATEC cung cấp thiết bị điện, tự động hoá và giải pháp kỹ thuật cho khách hàng từ sản xuất, thương mại đến dịch vụ.</p>
-          <div class="hero__ctas">
-            <a class="btn btn--accent" href="gioi-thieu.html">Tìm hiểu về công ty</a>
-            <a class="btn btn--ghost-white" href="#thiet-bi">Xem thiết bị ↓</a>
-          </div>
-        </div>
-        <aside class="company-card" aria-label="Đại diện chính thức">
-          <div class="company-card__head">
-            <img src="https://htat.vn/wp-content/uploads/2019/01/logo-1.png" alt="Logo Hoàng Trang" width="64" height="64">
-            <div><b>HOÀNG TRANG</b><span>Automation Co.</span></div>
-          </div>
-          <p class="company-card__label">Đại diện chính thức</p>
-          <ul class="company-card__brands" id="hero-brands"></ul>
-        </aside>
-      </div>
-    </section>
-
-    <nav class="journey" aria-label="Các bước">
-      <div class="container">
-        <a href="#ve-chung-toi"><span>1</span><b>Tìm hiểu Hoàng Trang</b></a>
-        <a href="#thiet-bi"><span>2</span><b>Xem thiết bị</b></a>
-        <a href="#chon-mua"><span>3</span><b>Chọn mua &amp; báo giá</b></a>
-      </div>
-    </nav>
-
-    <section class="section section--soft anchor" id="ve-chung-toi">
-      <div class="container">
-        <div class="section-head">
-          <div><p class="eyebrow eyebrow--dark">01 · Về Hoàng Trang</p><h2>Thiết bị và giải pháp kỹ thuật – tự động</h2></div>
-          <a href="gioi-thieu.html">Đọc giới thiệu đầy đủ →</a>
-        </div>
-        <div class="about-home">
-          <div class="grid grid--2 about-cards">
-            <div class="about-card"><div class="usp__icon" data-icon="cpu"></div><h3>Thiết bị điện tự động</h3><p>SCADA, PLC, HMI, Inverter, Relay,…</p></div>
-            <div class="about-card"><div class="usp__icon" data-icon="toggle"></div><h3>Thiết bị đóng cắt trung hạ thế</h3><p>MCB, MCCB, ACB, VCB, MC,…</p></div>
-            <div class="about-card"><div class="usp__icon" data-icon="zap"></div><h3>Thiết bị chuyển nguồn tự động</h3><p>ATS, ATCB, ACD,…</p></div>
-            <div class="about-card"><div class="usp__icon" data-icon="gauge"></div><h3>Thiết bị Primus</h3><p>Converter, Power Meter, Protection Relay, Signal Transmitter, Temperature Controller,…</p></div>
-          </div>
-          <div class="about-home__side">
-            <h3>Giải pháp kỹ thuật</h3>
-            <ul class="check-list">
-              <li><span data-icon="sun"></span>Tư vấn, thiết kế lắp đặt các dự án Solar.</li>
-              <li><span data-icon="zap"></span>Thiết kế lắp đặt hệ thống điện, hệ thống chiếu sáng,…</li>
-              <li><span data-icon="box"></span>Thiết kế lắp đặt hệ thống thang máy tòa nhà, chung cư.</li>
-              <li><span data-icon="shield"></span>Các hệ thống kiểm soát Access Control.</li>
-            </ul>
-            <h3>Đối tác tiêu biểu</h3>
-            <p class="partners-inline">HTV · CP Việt Nam · Vinamilk · Cargill Việt Nam · Vicem Hà Tiên</p>
+          <h2>Giới thiệu</h2>
+          <p class="intro2__lead">Công ty TNHH Kỹ Thuật Tự Động Hoàng Trang (HATEC) là đại diện chính thức của các hãng Hyundai, Osemco, Daco (Hàn Quốc), General Electric (Mỹ), Primus (Thái Lan).</p>
+          <p>Chúng tôi cung cấp thiết bị điện tự động, thiết bị đóng cắt trung hạ thế, thiết bị chuyển nguồn tự động, thiết bị Primus và các giải pháp kỹ thuật – tự động. Đối tác của HATEC đa dạng từ sản xuất, thương mại đến dịch vụ.</p>
+          <div class="intro2__btns">
+            <a class="btn btn--accent" href="gioi-thieu.html">Tìm hiểu thêm</a>
+            <a class="btn btn--sky" href="gioi-thieu.html#to-gioi-thieu">Tờ giới thiệu</a>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="usp" aria-label="Cam kết">
-      <div class="container" id="usp"></div>
     </section>
 
     <!-- ② THIẾT BỊ -->
     <section class="section anchor" id="thiet-bi">
       <div class="container">
-        <div class="section-head">
-          <div><p class="eyebrow eyebrow--dark">02 · Thiết bị</p><h2>Danh mục thiết bị</h2></div>
-          <a href="danh-muc.html">Xem tất cả →</a>
-        </div>
-        <div class="cats" id="cats"></div>
-        <div class="brands-row">
-          <span class="muted small">Theo thương hiệu:</span>
-          <div class="chips" id="brands"></div>
-        </div>
+        <div class="sec-title"><h2>Sản phẩm</h2><p>Thiết bị theo hãng — giá liên hệ, báo giá nhanh qua Hotline hoặc Zalo.</p></div>
+        <div class="brand-cards" id="brand-cards"></div>
+        <div class="cats cats--compact" id="cats"></div>
       </div>
     </section>
 
     <!-- ③ CHỌN MUA -->
-    <section class="section section--soft anchor" id="chon-mua">
+    <section class="section section--blue-soft anchor" id="chon-mua">
       <div class="container">
-        <div class="section-head">
-          <div><p class="eyebrow eyebrow--dark">03 · Chọn mua</p><h2>Sản phẩm bán chạy</h2></div>
+        <div class="sec-title"><h2>Sản phẩm bán chạy</h2></div>
+        <div class="carousel">
+          <div class="scroller" id="bestsellers"></div>
+          <div class="carousel__nav"><button class="prev" type="button" aria-label="Xem trước" data-icon="chevron"></button><button class="next" type="button" aria-label="Xem tiếp" data-icon="chevron"></button></div>
         </div>
-        <div class="scroller" id="bestsellers"></div>
+        <ol class="steps" style="margin-top:40px">
+          <li><span>1</span><b>Chọn thiết bị</b><p>Tìm theo mã hàng hoặc xem theo danh mục, thương hiệu.</p></li>
+          <li><span>2</span><b>Gửi yêu cầu báo giá</b><p>Thêm vào giỏ báo giá, hoặc gửi mã hàng qua Zalo / Hotline.</p></li>
+          <li><span>3</span><b>Nhận báo giá</b><p>Giá được báo qua điện thoại hoặc email.</p></li>
+        </ol>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="section-head"><h2>Sản phẩm theo danh mục</h2><a id="tab-more" href="danh-muc.html">Xem tất cả →</a></div>
-        <div class="tabs" role="tablist" id="tabs"></div>
-        <div class="grid grid--4" id="tab-panel" role="tabpanel"></div>
+        <div class="sec-title"><h2>Giải pháp</h2><p>Giải pháp kỹ thuật – tự động HATEC mang đến cho khách hàng, đối tác.</p></div>
+        <div class="solutions">
+          <div class="solution"><div class="solution__icon" data-icon="sun"></div><h3>Dự án Solar</h3><p>Tư vấn, thiết kế lắp đặt các dự án Solar.</p></div>
+          <div class="solution"><div class="solution__icon" data-icon="zap"></div><h3>Hệ thống điện &amp; chiếu sáng</h3><p>Thiết kế lắp đặt hệ thống điện, hệ thống chiếu sáng,…</p></div>
+          <div class="solution"><div class="solution__icon" data-icon="box"></div><h3>Thang máy</h3><p>Thiết kế lắp đặt hệ thống thang máy tòa nhà, chung cư.</p></div>
+          <div class="solution"><div class="solution__icon" data-icon="shield"></div><h3>Access Control</h3><p>Các hệ thống kiểm soát Access Control.</p></div>
+        </div>
       </div>
     </section>
 
-    <section class="section section--soft">
+    <section class="section section--blue-soft">
       <div class="container">
-        <div class="section-head"><h2>Cách đặt mua</h2></div>
-        <ol class="steps">
-          <li><span>1</span><b>Chọn thiết bị</b><p>Tìm theo mã hàng hoặc xem theo danh mục, thương hiệu.</p></li>
-          <li><span>2</span><b>Gửi yêu cầu báo giá</b><p>Thêm vào giỏ báo giá, hoặc gửi mã hàng qua Zalo / Hotline.</p></li>
-          <li><span>3</span><b>Nhận báo giá</b><p>Giá được báo qua điện thoại hoặc email.</p></li>
-        </ol>
+        <div class="sec-title"><h2>Dịch vụ &amp; cam kết</h2></div>
+        <div class="services" id="usp"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="sec-title"><h2>Đối tác tiêu biểu</h2><p>Đối tác của HATEC đa dạng từ các lĩnh vực sản xuất, thương mại đến dịch vụ.</p></div>
+        <ul class="partners2">
+          <li>Đài truyền hình TP.HCM (HTV)</li><li>CP Việt Nam</li><li>Vinamilk</li><li>Cargill Việt Nam</li><li>Vicem Hà Tiên</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section--news">
+      <div class="container">
+        <div class="sec-title sec-title--light"><h2>Tin mới nhất</h2><p><a href="tin-tuc.html">Xem tất cả bài viết →</a></p></div>
+        <div class="grid grid--3 posts" id="posts"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="sec-title"><h2>Khách hàng nói gì</h2></div>
+        <div class="grid grid--3 quotes" id="quotes"></div>
       </div>
     </section>
 
@@ -132,27 +128,13 @@
         <div class="cta-band__btns" id="cta-btns"></div>
       </div>
     </section>
-
-    <section class="section">
-      <div class="container">
-        <div class="section-head"><h2>Tin tức kỹ thuật</h2><a href="tin-tuc.html">Xem tất cả →</a></div>
-        <div class="grid grid--3 posts" id="posts"></div>
-      </div>
-    </section>
-
-    <section class="section section--soft">
-      <div class="container">
-        <div class="section-head"><h2>Khách hàng nói gì</h2></div>
-        <div class="grid grid--3 quotes" id="quotes"></div>
-      </div>
-    </section>
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="assets/js/data.js?v=12"></script>
-  <script src="assets/js/tin-tuc.js?v=12"></script>
-  <script src="assets/js/main.js?v=12"></script>
-  <script src="assets/js/home.js?v=12"></script>
+  <script src="assets/js/data.js?v=14"></script>
+  <script src="assets/js/tin-tuc.js?v=14"></script>
+  <script src="assets/js/main.js?v=15"></script>
+  <script src="assets/js/home.js?v=15"></script>
 </body>
 </html>

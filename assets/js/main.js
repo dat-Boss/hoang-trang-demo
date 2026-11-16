@@ -219,7 +219,8 @@
       colsHTML +
       '<div class="mega__col mega__brands"><h4>Thương hiệu</h4><ul>' +
       brandsShown.map((b) => '<li><a href="' + brandUrl(b) + '">' + esc(b) + ' <span>' + brandCount(b) + '</span></a></li>').join('') +
-      '</ul></div></div></div>';
+      '</ul></div></div>' +
+      '<div class="container mega__foot"><a href="danh-muc.html">Xem tất cả ' + D.products.length + ' sản phẩm →</a></div></div>';
   }
 
   function headerHTML(active) {
@@ -237,19 +238,25 @@
       '<input id="' + id + '" name="q" type="search" autocomplete="off" placeholder="Tìm theo mã hàng, ví dụ OSS-61-TN" value="' + esc(params.get('q') || '') + '">' +
       '<button type="submit" aria-label="Tìm">' + icon('search') + '</button><div class="search__suggest" role="listbox"></div></form>';
 
+    // Đầu trang máy tính — phong cách doanh nghiệp: 1 hàng thông tin mảnh + 1 hàng chính (logo · menu in hoa · tìm · giỏ · báo giá)
+    const navItem = (n) => n[2] === 'products'
+      ? '<li><button class="hdr__navbtn nav__cat" type="button" aria-expanded="false" aria-controls="mega"' + (active === 'products' ? ' aria-current="page"' : '') + '>' + n[1] + icon('chevron') + '</button></li>'
+      : '<li><a href="' + n[0] + '"' + (n[2] === active ? ' aria-current="page"' : '') + '>' + n[1] + '</a></li>';
     return '<div class="proto-note">Bản mẫu giao diện — dữ liệu lấy từ htat.vn, chưa kết nối đặt hàng thật.</div>' +
-      '<div class="topbar"><div class="container"><div class="topbar__info">' +
-      '<span>' + icon('phone') + 'Hotline <a href="' + SITE.tel + '"><b>' + SITE.hotline + '</b></a></span>' +
-      '<span>' + icon('chat') + 'Zalo <a href="' + SITE.zaloUrl + '" target="_blank" rel="noopener"><b>' + SITE.zalo + '</b></a></span>' +
-      '<span>' + icon('clock') + SITE.hours + '</span></div>' +
-      '<span>' + icon('mail') + '<a href="mailto:' + SITE.email + '">' + SITE.email + '</a></span></div></div>' +
-      '<header class="header"><div class="container header__main">' + logo + searchBox('q-desk') +
-      '<div class="header__actions"><a class="cart-link" href="gio-hang.html">' + icon('cart') + '<span class="badge-count" data-n="0">0</span>Giỏ báo giá</a>' +
-      '<a class="btn btn--accent" href="gio-hang.html">Yêu cầu báo giá</a></div></div></header>' +
-      '<nav class="nav" aria-label="Menu chính"><div class="container" style="position:relative">' +
-      '<button class="nav__cat" type="button" aria-expanded="false" aria-controls="mega">' + icon('menu') + 'Danh mục sản phẩm</button>' +
-      '<ul class="nav__links">' + nav.map((n) => '<li><a href="' + n[0] + '"' + (n[2] === active ? ' aria-current="page"' : '') + '>' + n[1] + '</a></li>').join('') + '</ul>' +
-      '</div>' + megaHTML() + '</nav>' +
+      '<div class="hdr-top"><div class="container">' +
+      '<div class="hdr-top__info"><span>' + icon('clock') + 'Giờ làm việc ' + SITE.hours + '</span>' +
+      '<span>' + icon('mail') + '<a href="mailto:' + SITE.email + '">' + SITE.email + '</a></span></div>' +
+      '<div class="hdr-top__links"><a href="tin-tuc.html">Tin tức</a><a href="lien-he.html">Liên hệ</a>' +
+      '<a href="' + SITE.zaloUrl + '" target="_blank" rel="noopener">Zalo ' + SITE.zalo + '</a>' +
+      '<a class="hdr-phone" href="' + SITE.tel + '">' + icon('phone') + SITE.hotline + '</a></div></div></div>' +
+      '<header class="hdr"><div class="container hdr__main">' + logo +
+      '<nav class="hdr__nav" aria-label="Menu chính"><ul>' + nav.map(navItem).join('') + '</ul></nav>' +
+      '<div class="hdr__actions">' +
+      '<button class="icon-btn hdr__searchbtn" type="button" aria-label="Tìm sản phẩm" aria-expanded="false" aria-controls="hdr-search">' + icon('search') + '</button>' +
+      '<a class="icon-btn hdr__cart" href="gio-hang.html" aria-label="Giỏ báo giá">' + icon('cart') + '<span class="badge-count" data-n="0">0</span></a>' +
+      '<a class="btn btn--accent" href="gio-hang.html">Yêu cầu báo giá</a></div></div>' +
+      '<div class="hdr__search" id="hdr-search" hidden><div class="container">' + searchBox('q-desk') + '</div></div>' +
+      megaHTML() + '</header>' +
       '<div class="mheader"><div class="container"><div class="mheader__row">' +
       '<button class="icon-btn" type="button" data-drawer-open aria-label="Mở menu">' + icon('menu') + '</button>' + logo +
       '<a class="icon-btn" href="gio-hang.html" aria-label="Giỏ báo giá">' + icon('cart') + '<span class="badge-count" data-n="0">0</span></a>' +
@@ -276,8 +283,8 @@
       '<p>Địa chỉ: ' + SITE.address + '</p><p>Điện thoại: <a href="' + SITE.tel + '">' + SITE.hotline + '</a></p>' +
       '<p>Email: <a href="mailto:' + SITE.email + '">' + SITE.email + '</a></p><p>Zalo: <a href="' + SITE.zaloUrl + '">' + SITE.zalo + '</a></p>' +
       '<p>Thời gian: ' + SITE.hours + '</p></div>' +
-      '<details><summary><h4>Sản phẩm</h4></summary><ul>' + prod.map((g) => '<li><a href="' + groupUrl(g.key) + '">' + esc(g.name) + '</a></li>').join('') + '</ul></details>' +
-      '<details><summary><h4>Thông tin</h4></summary><ul>' + policies.map((p) => '<li><a href="' + p[1] + '">' + p[0] + '</a></li>').join('') + '</ul></details>' +
+      '<details class="foot-fold" open><summary><h4>Sản phẩm</h4></summary><ul>' + prod.map((g) => '<li><a href="' + groupUrl(g.key) + '">' + esc(g.name) + '</a></li>').join('') + '</ul></details>' +
+      '<details class="foot-fold" open><summary><h4>Thông tin</h4></summary><ul>' + policies.map((p) => '<li><a href="' + p[1] + '">' + p[0] + '</a></li>').join('') + '</ul></details>' +
       '<div><h4>Đăng ký nhận tư vấn miễn phí</h4><form class="footer__sub" data-proto-form="Đăng ký nhận tư vấn">' +
       '<label class="sr-only" for="sub-email">Email</label><input id="sub-email" type="email" required placeholder="Địa chỉ email">' +
       '<button class="btn btn--accent" type="submit">Gửi</button></form></div>' +
@@ -286,7 +293,10 @@
       '<a class="mbar__call" href="' + SITE.tel + '">' + icon('phone') + 'Gọi</a>' +
       '<a class="mbar__zalo" href="' + SITE.zaloUrl + '" target="_blank" rel="noopener">' + icon('chat') + 'Zalo</a>' +
       '<button type="button" data-drawer-open>' + icon('grid') + 'Danh mục</button>' +
-      '<a href="gio-hang.html">' + icon('cart') + '<span class="badge-count" data-n="0">0</span>Giỏ báo giá</a></nav>';
+      '<a href="gio-hang.html">' + icon('cart') + '<span class="badge-count" data-n="0">0</span>Giỏ báo giá</a></nav>' +
+      // Nút nổi gọi / Zalo ở góc phải (máy tính)
+      '<div class="fab" aria-label="Liên hệ nhanh"><a class="fab__call" href="' + SITE.tel + '" aria-label="Gọi ' + SITE.hotline + '">' + icon('phone') + '</a>' +
+      '<a class="fab__zalo" href="' + SITE.zaloUrl + '" target="_blank" rel="noopener" aria-label="Chat Zalo">Zalo</a></div>';
   }
 
   /* ---------- Gắn sự kiện chung ---------- */
@@ -298,6 +308,20 @@
       btn.addEventListener('click', (e) => { e.stopPropagation(); set(!mega.classList.contains('open')); });
       document.addEventListener('click', (e) => { if (!e.target.closest('#mega')) set(false); });
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+    }
+    // Ô tìm kiếm thả xuống ở đầu trang (máy tính)
+    const sBtn = $('.hdr__searchbtn'), sBox = $('#hdr-search');
+    if (sBtn && sBox) {
+      const setS = (o) => { sBox.hidden = !o; sBtn.setAttribute('aria-expanded', o); if (o) $('input', sBox).focus(); };
+      sBtn.addEventListener('click', () => setS(sBox.hidden));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sBox.hidden) { setS(false); sBtn.focus(); } });
+      if (params.get('q')) setS(true);
+    }
+    // Đầu trang đổ bóng khi cuộn
+    const hdr = $('.hdr');
+    if (hdr) {
+      const onScroll = () => hdr.classList.toggle('is-scrolled', window.scrollY > 40);
+      window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
     }
     // Ngăn kéo điện thoại
     const drawer = $('#drawer');
@@ -352,6 +376,8 @@
     bindHeader();
     updateCartBadges();
     $$('[data-icon]').forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
+    // Chân trang: máy tính luôn mở danh sách; điện thoại gập lại (bấm để mở)
+    if (window.matchMedia('(max-width: 767px)').matches) $$('.foot-fold').forEach((d) => d.removeAttribute('open'));
   }
   init();
 
