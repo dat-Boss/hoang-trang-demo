@@ -208,14 +208,16 @@
 
   /* ---------- Đầu trang ---------- */
   function megaHTML() {
-    const cols = D.groups.map((g) => '<div><h4>' + esc(g.name) + '</h4><ul>' +
+    const group = (g) => '<div class="mega__group"><h4>' + esc(g.name) + '</h4><ul>' +
       g.items.map((i) => '<li><a href="' + groupUrl(i.key) + '">' + esc(i.name) + ' <span>' + i.count + '</span></a></li>').join('') +
-      '</ul></div>');
-    // gom 2 nhóm nhỏ cuối vào 1 cột cho cân
-    const merged = [cols[0], cols[1] + cols[3] + cols[4], cols[2]];
-    return '<div class="mega" id="mega"><div class="container mega__inner" style="grid-template-columns:repeat(3,1fr) 220px">' +
-      merged.join('') +
-      '<div class="mega__brands"><h4>Thương hiệu</h4><ul>' +
+      '</ul></div>';
+    // 4 cột cố định: [Đóng cắt] [Biến tần + Làm mát + NLMT xếp chồng] [Đo lường & điều khiển] [Thương hiệu]
+    const g = D.groups;
+    const colsHTML = [[g[0]], [g[1], g[3], g[4]], [g[2]]]
+      .map((c) => '<div class="mega__col">' + c.filter(Boolean).map(group).join('') + '</div>').join('');
+    return '<div class="mega" id="mega"><div class="container mega__inner">' +
+      colsHTML +
+      '<div class="mega__col mega__brands"><h4>Thương hiệu</h4><ul>' +
       brandsShown.map((b) => '<li><a href="' + brandUrl(b) + '">' + esc(b) + ' <span>' + brandCount(b) + '</span></a></li>').join('') +
       '</ul></div></div></div>';
   }

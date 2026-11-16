@@ -771,3 +771,21 @@ a.info-card:hover { border-color: var(--brand-700); background: var(--brand-50);
   .company-card__brands a { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; padding: 6px 12px; min-height: 52px; }
   .company-card__brands li:last-child { grid-column: 1 / -1; }
 }
+
+/* Menu danh mục (mega menu) — sửa bố cục ở màn hình vừa (16/11/2026):
+   có lề hai bên, đúng 4 cột, cuộn được khi cửa sổ thấp */
+.mega { max-height: calc(100vh - 140px); overflow-y: auto; overscroll-behavior: contain; }
+.mega .mega__inner {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(170px, 210px);
+  gap: 28px 40px; padding: 24px var(--gutter) 28px;
+}
+.mega__col { display: grid; gap: 22px; align-content: start; min-width: 0; }
+.mega h4 { line-height: 1.35; }
+.mega li a { align-items: baseline; line-height: 1.4; }
+.mega li a span { flex: none; min-width: 2ch; text-align: right; }
+.mega__brands { border-left: 1px solid var(--border); padding-left: 24px; }
+@media (max-width: 1279px) {
+  .mega .mega__inner { gap: 24px; grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(150px, 180px); }
+  .mega li a { font-size: 14px; }
+  .mega__brands { padding-left: 20px; }
+}
