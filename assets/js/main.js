@@ -223,8 +223,8 @@
   function headerHTML(active) {
     const nav = [
       ['index.html', 'Trang chủ', 'home'],
+      ['gioi-thieu.html', 'Giới thiệu', 'about'],   // giới thiệu công ty trước, rồi mới đến sản phẩm
       ['danh-muc.html', 'Sản phẩm', 'products'],
-      ['gioi-thieu.html', 'Giới thiệu', 'about'],
       ['tin-tuc.html', 'Tin tức', 'news'],
       ['lien-he.html', 'Liên hệ', 'contact'],
     ];

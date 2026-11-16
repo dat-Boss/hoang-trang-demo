@@ -704,3 +704,70 @@ a.info-card:hover { border-color: var(--brand-700); background: var(--brand-50);
 @media (max-width: 767px) { .article__head h1 { font-size: 24px; } .article__body { font-size: 16px; } }
 
 .brochure { margin: 0; }
+
+/* =========================================================
+   Trang chủ — luồng mới: ① Công ty → ② Thiết bị → ③ Chọn mua (16/11/2026)
+   ========================================================= */
+.eyebrow { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.75); }
+.eyebrow--dark { color: var(--accent); margin-bottom: 6px; }
+.hero--company .container { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); padding-top: 64px; padding-bottom: 64px; }
+.hero--company h1 { font-size: 42px; }
+.hero--company p b { color: #fff; }
+.company-card { background: #fff; color: var(--text); border-radius: 12px; padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,.22); }
+.company-card__head { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.company-card__head img { width: 64px; height: 64px; }
+.company-card__head b { display: block; font-size: 20px; color: var(--brand-900); letter-spacing: .04em; }
+.company-card__head span { font-size: 13px; color: var(--muted); }
+.company-card__label { margin: 16px 0 10px; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--brand-700); }
+.company-card__brands { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.company-card__brands a { display: flex; justify-content: space-between; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--border); border-radius: 6px; color: var(--text); text-decoration: none; }
+.company-card__brands a:hover { border-color: var(--brand-700); background: var(--brand-50); }
+.company-card__brands b { font-size: 16px; color: var(--brand-900); }
+.company-card__brands span { font-size: 13px; color: var(--muted); }
+@media (max-width: 1023px) {
+  .hero--company .container { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-top: 32px; padding-bottom: 32px; }
+  .hero--company h1 { font-size: 28px; }
+}
+@media (max-width: 767px) { .company-card { padding: 16px; } }
+
+.journey { background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 48px; z-index: 40; }
+.journey .container { display: grid; grid-template-columns: repeat(3, 1fr); }
+.journey a { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; color: var(--muted); text-decoration: none; border-bottom: 3px solid transparent; font-size: 15px; }
+.journey a span { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 1.5px solid var(--border); font-weight: 700; font-size: 14px; }
+.journey a:hover, .journey a.is-active { color: var(--brand-700); border-bottom-color: var(--brand-700); }
+.journey a.is-active span, .journey a:hover span { background: var(--brand-700); border-color: var(--brand-700); color: #fff; }
+@media (max-width: 1023px) { .journey { top: 114px; } }
+@media (max-width: 767px) {
+  .journey a { flex-direction: column; gap: 2px; font-size: 12px; min-height: 60px; text-align: center; line-height: 1.25; padding: 6px 4px; }
+  .journey a b { font-weight: 600; }
+}
+.anchor { scroll-margin-top: 120px; }
+@media (max-width: 1023px) { .anchor { scroll-margin-top: 190px; } }
+
+.grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.about-home { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.about-home__side { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+.about-home__side h3 { font-size: 18px; margin: 0 0 12px; }
+.about-home__side .check-list { margin-bottom: 20px; }
+.partners-inline { margin: 0; color: var(--text); font-weight: 500; }
+@media (max-width: 1023px) { .about-home { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 767px) { .grid--2 { grid-template-columns: minmax(0, 1fr); } .about-home__side { padding: 16px; } }
+
+.brands-row { display: flex; align-items: center; gap: 12px 16px; flex-wrap: wrap; margin-top: 24px; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; counter-reset: none; }
+.steps li { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; display: grid; gap: 6px; }
+.steps li span { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; display: grid; place-items: center; }
+.steps li b { font-size: 17px; }
+.steps li p { margin: 0; color: var(--muted); font-size: 15px; }
+@media (max-width: 767px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+/* Điện thoại: dải 3 bước không dính, tránh chiếm chỗ màn hình */
+@media (max-width: 1023px) { .journey { position: static; } .anchor { scroll-margin-top: 130px; } }
+/* Điện thoại: thẻ "Đại diện chính thức" gọn lại (logo đã có trên đầu trang) */
+@media (max-width: 1023px) {
+  .company-card__head { display: none; }
+  .company-card__label { margin-top: 0; }
+  .company-card__brands { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .company-card__brands a { flex-direction: column; align-items: flex-start; justify-content: center; gap: 0; padding: 6px 12px; min-height: 52px; }
+  .company-card__brands li:last-child { grid-column: 1 / -1; }
+}

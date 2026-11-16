@@ -1,21 +1,24 @@
 /* Trang chủ */
 (function () {
   'use strict';
-  const H = window.HTAT, { D, SITE, icon, esc, $, cardHTML, img } = H;
+  const H = window.HTAT, { D, SITE, icon, esc, $, cardHTML } = H;
   const P = D.products;
-  const bySlug = (s) => P.find((p) => p.slug === s);
 
-  // Khối mở đầu: ghép tạm từ ảnh sản phẩm có sẵn
-  const heroPicks = [
-    'bo-chuyen-nguon-ats-osung-3p4000a',
-    'bien-tan-hyundai-n700e-150hf-15kw-3-pha-380v',
-    'digital-indicator-model-cm-004n',
-    'osb-ii-may-cat-khong-khi-osb-ii-acb-osung-korea',
-  ].map(bySlug).filter(Boolean);
-  const bests = P.filter((p) => p.cats.includes(D.bestSellerCat));
-  while (heroPicks.length < 4 && bests.length) { const b = bests.shift(); if (!heroPicks.includes(b)) heroPicks.push(b); }
-  $('#hero-collage').innerHTML = heroPicks.slice(0, 4).map((p) => '<figure>' + img(p.imgs[0] && p.imgs[0].src, '').replace('loading="lazy"', 'loading="eager" fetchpriority="high"') + '</figure>').join('');
-  $('#hero-zalo').href = SITE.zaloUrl;
+  // ① Khối giới thiệu công ty: 5 hãng đại diện chính thức (theo tờ giới thiệu HATEC)
+  const reps = [['Hyundai', 'Hàn Quốc', 'Hyundai'], ['Osemco', 'Hàn Quốc', 'Osemco'], ['Daco', 'Hàn Quốc', 'Daco'],
+    ['General Electric', 'Mỹ', 'GE'], ['Primus', 'Thái Lan', 'Primus']];
+  $('#hero-brands').innerHTML = reps.map((r) => '<li><a href="' + H.brandUrl(r[2]) + '"><b>' + r[0] + '</b><span>' + r[1] + '</span></a></li>').join('');
+
+  // Dải 3 bước: đánh dấu bước đang xem khi cuộn
+  const steps = [...document.querySelectorAll('.journey a')];
+  const secs = steps.map((a) => document.querySelector(a.getAttribute('href')));
+  const markStep = () => {
+    let cur = -1;
+    secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < window.innerHeight * 0.45) cur = i; });
+    steps.forEach((a, i) => a.classList.toggle('is-active', i === cur));
+  };
+  window.addEventListener('scroll', markStep, { passive: true });
+  markStep();
 
   // Dải cam kết (giữ nội dung web cũ)
   const usp = [
