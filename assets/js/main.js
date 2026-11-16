@@ -53,6 +53,7 @@
     box: '<path d="M21 8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/>',
     receipt: '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/>',
     chevron: '<path d="m6 9 6 6 6-6"/>',
+    home: '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6a2 2 0 0 1 .7 1.5v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
     arrow: '<path d="M5 12h14M12 5l7 7-7 7"/>',
   };
   function icon(name, cls) {
@@ -271,7 +272,7 @@
       '</div></div>';
   }
 
-  function footerHTML() {
+  function footerHTML(page) {
     const policies = [
       ['Giới thiệu', 'gioi-thieu.html'], ['Tin tức', 'tin-tuc.html'], ['Liên hệ', 'lien-he.html'], ['Giỏ báo giá', 'gio-hang.html'],
       // Không còn link nào sang web cũ (anh duyệt 13/11/2026). Các trang chính sách
@@ -289,11 +290,14 @@
       '<label class="sr-only" for="sub-email">Email</label><input id="sub-email" type="email" required placeholder="Địa chỉ email">' +
       '<button class="btn btn--accent" type="submit">Gửi</button></form></div>' +
       '</div></div><div class="footer__bottom"><div class="container">© ' + new Date().getFullYear() + ' htat.vn — ' + SITE.company + '</div></div></footer>' +
+      // Thanh dưới kiểu ứng dụng (điện thoại): Trang chủ · Danh mục · Gọi · Zalo · Giỏ
       '<nav class="mbar" aria-label="Thao tác nhanh">' +
-      '<a class="mbar__call" href="' + SITE.tel + '">' + icon('phone') + 'Gọi</a>' +
-      '<a class="mbar__zalo" href="' + SITE.zaloUrl + '" target="_blank" rel="noopener">' + icon('chat') + 'Zalo</a>' +
-      '<button type="button" data-drawer-open>' + icon('grid') + 'Danh mục</button>' +
-      '<a href="gio-hang.html">' + icon('cart') + '<span class="badge-count" data-n="0">0</span>Giỏ báo giá</a></nav>' +
+      '<a href="index.html"' + (page === 'home' ? ' aria-current="page"' : '') + '>' + icon('home') + '<span class="mbar__lbl">Trang chủ</span></a>' +
+      '<button type="button" data-drawer-open>' + icon('grid') + '<span class="mbar__lbl">Danh mục</span></button>' +
+      '<a class="mbar__call" href="' + SITE.tel + '">' + icon('phone') + '<span class="mbar__lbl">Gọi</span></a>' +
+      '<a class="mbar__zalo" href="' + SITE.zaloUrl + '" target="_blank" rel="noopener">' + icon('chat') + '<span class="mbar__lbl">Zalo</span></a>' +
+      '<a href="gio-hang.html"' + (page === 'cart' ? ' aria-current="page"' : '') + '>' + icon('cart') + '<span class="badge-count" data-n="0">0</span><span class="mbar__lbl"><span class="lbl-l">Giỏ báo giá</span><span class="lbl-s">Giỏ</span></span></a></nav>' +
+      '<button class="to-top" type="button" aria-label="Lên đầu trang">' + icon('chevron') + '</button>' +
       // Nút nổi gọi / Zalo ở góc phải (máy tính)
       '<div class="fab" aria-label="Liên hệ nhanh"><a class="fab__call" href="' + SITE.tel + '" aria-label="Gọi ' + SITE.hotline + '">' + icon('phone') + '</a>' +
       '<a class="fab__zalo" href="' + SITE.zaloUrl + '" target="_blank" rel="noopener" aria-label="Chat Zalo">Zalo</a></div>';
@@ -372,12 +376,19 @@
     const page = document.body.dataset.page;
     const h = $('#site-header'), f = $('#site-footer');
     if (h) h.outerHTML = headerHTML(page);
-    if (f) f.outerHTML = footerHTML();
+    if (f) f.outerHTML = footerHTML(page);
     bindHeader();
     updateCartBadges();
     $$('[data-icon]').forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
     // Chân trang: máy tính luôn mở danh sách; điện thoại gập lại (bấm để mở)
     if (window.matchMedia('(max-width: 767px)').matches) $$('.foot-fold').forEach((d) => d.removeAttribute('open'));
+    // Nút lên đầu trang (điện thoại): hiện sau khi cuộn quá 1 màn hình
+    const top = $('.to-top');
+    if (top) {
+      top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+      const onS = () => top.classList.toggle('show', window.scrollY > window.innerHeight);
+      window.addEventListener('scroll', onS, { passive: true }); onS();
+    }
   }
   init();
 
