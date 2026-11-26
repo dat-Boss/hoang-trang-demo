@@ -239,25 +239,22 @@
       '<input id="' + id + '" name="q" type="search" autocomplete="off" placeholder="Tìm theo mã hàng, ví dụ OSS-61-TN" value="' + esc(params.get('q') || '') + '">' +
       '<button type="submit" aria-label="Tìm">' + icon('search') + '</button><div class="search__suggest" role="listbox"></div></form>';
 
-    // Đầu trang máy tính — phong cách doanh nghiệp: 1 hàng thông tin mảnh + 1 hàng chính (logo · menu in hoa · tìm · giỏ · báo giá)
-    const navItem = (n) => n[2] === 'products'
-      ? '<li><button class="hdr__navbtn nav__cat" type="button" aria-expanded="false" aria-controls="mega"' + (active === 'products' ? ' aria-current="page"' : '') + '>' + n[1] + icon('chevron') + '</button></li>'
-      : '<li><a href="' + n[0] + '"' + (n[2] === active ? ' aria-current="page"' : '') + '>' + n[1] + '</a></li>';
+    // Đầu trang máy tính — GIAO DIỆN 3 (kiểu sàn thiết bị kỹ thuật, tham khảo ausotech.com):
+    // dải mảnh (khẩu hiệu + Hotline) · đầu trang xanh than (logo · ô tìm to · liên hệ · giỏ) · thanh menu trắng (☰ Danh mục + menu)
     return '<div class="proto-note">Bản mẫu giao diện — dữ liệu lấy từ htat.vn, chưa kết nối đặt hàng thật.</div>' +
-      '<div class="hdr-top"><div class="container">' +
-      '<div class="hdr-top__info"><span>' + icon('clock') + 'Giờ làm việc ' + SITE.hours + '</span>' +
-      '<span>' + icon('mail') + '<a href="mailto:' + SITE.email + '">' + SITE.email + '</a></span></div>' +
-      '<div class="hdr-top__links"><a href="tin-tuc.html">Tin tức</a><a href="lien-he.html">Liên hệ</a>' +
-      '<a href="' + SITE.zaloUrl + '" target="_blank" rel="noopener">Zalo ' + SITE.zalo + '</a>' +
-      '<a class="hdr-phone" href="' + SITE.tel + '">' + icon('phone') + SITE.hotline + '</a></div></div></div>' +
-      '<header class="hdr"><div class="container hdr__main">' + logo +
-      '<nav class="hdr__nav" aria-label="Menu chính"><ul>' + nav.map(navItem).join('') + '</ul></nav>' +
-      '<div class="hdr__actions">' +
-      '<button class="icon-btn hdr__searchbtn" type="button" aria-label="Tìm sản phẩm" aria-expanded="false" aria-controls="hdr-search">' + icon('search') + '</button>' +
-      '<a class="icon-btn hdr__cart" href="gio-hang.html" aria-label="Giỏ báo giá">' + icon('cart') + '<span class="badge-count" data-n="0">0</span></a>' +
-      '<a class="btn btn--accent" href="gio-hang.html">Yêu cầu báo giá</a></div></div>' +
-      '<div class="hdr__search" id="hdr-search" hidden><div class="container">' + searchBox('q-desk') + '</div></div>' +
-      megaHTML() + '</header>' +
+      '<div class="t3-top"><div class="container">' +
+      '<span class="t3-top__slogan">HATEC · Đại diện chính thức Hyundai · Osemco · Daco · General Electric · Primus</span>' +
+      '<span class="t3-top__hot">HOTLINE <a href="' + SITE.tel + '">' + SITE.hotline + '</a></span></div></div>' +
+      '<header class="t3-head"><div class="container t3-head__row">' + logo + searchBox('q-desk') +
+      '<div class="t3-head__acts">' +
+      '<a class="t3-act" href="' + SITE.zaloUrl + '" target="_blank" rel="noopener">' + icon('chat') + '<span><small>Tư vấn Zalo</small><b>' + SITE.zalo + '</b></span></a>' +
+      '<a class="t3-act t3-act--cart" href="gio-hang.html" aria-label="Giỏ báo giá">' + icon('cart') + '<span class="badge-count" data-n="0">0</span><span><small>Giỏ</small><b>Báo giá</b></span></a>' +
+      '</div></div></header>' +
+      '<nav class="t3-nav" aria-label="Menu chính"><div class="container t3-nav__row">' +
+      '<button class="t3-nav__cat nav__cat" type="button" aria-expanded="false" aria-controls="mega">' + icon('menu') + 'Danh mục sản phẩm</button>' +
+      '<ul class="t3-nav__links">' + nav.map((n) => '<li><a href="' + n[0] + '"' + (n[2] === active ? ' aria-current="page"' : '') + '>' + n[1] + '</a></li>').join('') + '</ul>' +
+      '<a class="btn btn--accent t3-nav__cta" href="gio-hang.html">Yêu cầu báo giá</a>' +
+      '</div>' + megaHTML() + '</nav>' +
       '<div class="mheader"><div class="container"><div class="mheader__row">' +
       '<button class="icon-btn" type="button" data-drawer-open aria-label="Mở menu">' + icon('menu') + '</button>' + logo +
       '<a class="icon-btn" href="gio-hang.html" aria-label="Giỏ báo giá">' + icon('cart') + '<span class="badge-count" data-n="0">0</span></a>' +
@@ -322,7 +319,7 @@
       if (params.get('q')) setS(true);
     }
     // Đầu trang đổ bóng khi cuộn
-    const hdr = $('.hdr');
+    const hdr = $('.hdr') || $('.t3-nav');
     if (hdr) {
       const onScroll = () => hdr.classList.toggle('is-scrolled', window.scrollY > 40);
       window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
